@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AZIC · AI Reporting Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   AZENTIO GLOBAL DESIGN SYSTEM — LIGHT MODE
+   Tokens extracted from AZ-Global-design-system (Figma)
+   ───────────────────────────────────────── */
+:root {
+  /* Brand */
+  --az-green:          #2ED88E;
+  --az-green-hover:    #55FFBE;
+  --az-green-25:       #D4FFEF;
+  --az-green-link:     #00BE6B;
+
+  /* Brand Dark (primary text, buttons, nav) */
+  --az-dark:           #16303D;
+  --az-dark-70:        #5C6E77;
+  --az-dark-40:        #8A979E;
+  --az-dark-25:        #C5CBCE;
+  --az-dark-15:        #DCE0E2;
+  --az-dark-5:         #F3F5F5;
+
+  /* Text */
+  --az-text-primary:   #16303D;
+  --az-text-secondary: #7B959C;
+  --az-text-placeholder:#ACBEC3;
+  --az-text-disabled:  #C6CBD0;
+  --az-text-link:      #00BE6B;
+
+  /* Surfaces & Backgrounds */
+  --az-bg:             #F7F7F6;
+  --az-surface:        #FFFFFF;
+  --az-border:         #E9E9E9;
+  --az-border-mid:     #B9C1C5;
+  --az-filter:         #E8EAEC;
+  --az-table-header:   #E8EAEC;
+  --az-chip-bg:        #EBFBF4;
+  --az-chip-border:    #B3EED6;
+
+  /* Primary Button */
+  --az-btn-primary:    #16303D;
+  --az-btn-primary-hover: #21583A;
+  --az-btn-primary-text: #FFFFFF;
+
+  /* Secondary Button */
+  --az-btn-secondary:  #FFFFFF;
+  --az-btn-secondary-hover: #EBFBF4;
+
+  /* Status */
+  --az-success:        #13CE66;
+  --az-success-bg:     #E8FAF1;
+  --az-error:          #F24456;
+  --az-error-bg:       #FEF0F2;
+  --az-warning:        #F18710;
+  --az-warning-bg:     #FEF3E7;
+  --az-info:           #3451A3;
+  --az-info-bg:        #EEF2FF;
+
+  /* Shadows */
+  --shadow-xs:  0 1px 2px rgba(22,48,61,.05);
+  --shadow-sm:  0 1px 3px rgba(22,48,61,.08), 0 1px 2px rgba(22,48,61,.04);
+  --shadow-md:  0 4px 12px rgba(22,48,61,.08), 0 2px 4px rgba(22,48,61,.04);
+  --shadow-lg:  0 8px 24px rgba(22,48,61,.10), 0 4px 8px rgba(22,48,61,.04);
+
+  /* Radius */
+  --r-xs:  4px;
+  --r-sm:  6px;
+  --r:     8px;
+  --r-md:  10px;
+  --r-lg:  12px;
+  --r-xl:  16px;
+  --r-pill:999px;
+
+  /* Spacing */
+  --sidebar-w: 240px;
+  --right-w:   272px;
+  --topnav-h:  52px;
+  --statusbar-h: 24px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--az-text-primary);
+  background: var(--az-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCROLLBARS ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--az-dark-15); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--az-dark-25); }
+
+/* ═══════════════════════════════════════
+   TOP NAVIGATION  (Azentio header style)
+   ═══════════════════════════════════════ */
+.topnav {
+  height: var(--topnav-h);
+  background: var(--az-dark);
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 0;
+  gap: 0;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 200;
+}
+
+.topnav-logo {
+  width: var(--sidebar-w);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px;
+  height: 100%;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--az-green);
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-mark svg { width: 18px; height: 18px; }
+.logo-text { display: flex; flex-direction: column; }
+.logo-name { font-size: 13px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.2px; line-height: 1; }
+.logo-sub { font-size: 10px; font-weight: 400; color: rgba(255,255,255,0.45); margin-top: 2px; letter-spacing: 0.2px; }
+
+.topnav-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 4px;
+}
+
+/* Module pill tabs in header */
+.nav-module-tabs { display: flex; gap: 2px; }
+.nav-module-tab {
+  height: 30px; padding: 0 14px;
+  border-radius: var(--r-pill);
+  font-size: 12px; font-weight: 500;
+  cursor: pointer; border: none; background: none;
+  color: rgba(255,255,255,0.55);
+  transition: all 0.15s; white-space: nowrap;
+}
+.nav-module-tab:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); }
+.nav-module-tab.active {
+  background: var(--az-green);
+  color: var(--az-dark);
+  font-weight: 600;
+}
+
+.topnav-right {
+  display: flex; align-items: center; gap: 8px;
+  margin-left: auto;
+}
+.topnav-badge {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 500;
+  padding: 4px 10px; border-radius: var(--r-pill);
+  background: rgba(46,216,142,0.15);
+  color: var(--az-green);
+  border: 1px solid rgba(46,216,142,0.25);
+}
+.topnav-badge .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--az-green);
+  box-shadow: 0 0 0 2px rgba(46,216,142,0.3);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 2px rgba(46,216,142,0.3)} 50%{box-shadow:0 0 0 4px rgba(46,216,142,0.15)} }
+
+.topnav-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.1); }
+
+.topnav-icon {
+  width: 32px; height: 32px; border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; background: transparent; border: none;
+  color: rgba(255,255,255,0.55); transition: all 0.15s;
+}
+.topnav-icon:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
+.topnav-icon svg { width: 16px; height: 16px; }
+
+.avatar-btn {
+  width: 30px; height: 30px; border-radius: var(--r-pill);
+  background: var(--az-green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--az-dark);
+  cursor: pointer; border: 2px solid rgba(46,216,142,0.4);
+  transition: all 0.15s;
+}
+.avatar-btn:hover { border-color: var(--az-green); }
+
+/* ═══════════════════════════════════════
+   APP BODY
+   ═══════════════════════════════════════ */
+.app-body {
+  display: flex;
+  height: calc(100vh - var(--topnav-h) - var(--statusbar-h));
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   LEFT SIDEBAR  (Azentio expandable nav)
+   ═══════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--az-surface);
+  border-right: 1px solid var(--az-border);
+  display: flex; flex-direction: column;
+  flex-shrink: 0; overflow: hidden;
+}
+
+.sidebar-section { padding: 12px 10px 4px; }
+.sidebar-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.7px; text-transform: uppercase;
+  color: var(--az-text-placeholder);
+  padding: 0 8px; margin-bottom: 4px; display: block;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: var(--r);
+  cursor: pointer; font-size: 13px; font-weight: 400;
+  color: var(--az-text-secondary);
+  transition: all 0.15s; position: relative;
+  text-decoration: none;
+}
+.nav-item:hover { background: var(--az-filter); color: var(--az-text-primary); }
+.nav-item.active {
+  background: var(--az-chip-bg);
+  color: var(--az-green-link);
+  font-weight: 500;
+}
+.nav-item.active .nav-icon { color: var(--az-green); }
+.nav-icon {
+  width: 16px; height: 16px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--az-dark-25);
+}
+.nav-item.active .nav-icon { color: var(--az-green); }
+.nav-item:hover .nav-icon { color: var(--az-dark-70); }
+.nav-badge {
+  margin-left: auto; font-size: 10px; font-weight: 600;
+  padding: 1px 7px; border-radius: var(--r-pill);
+  background: var(--az-chip-bg); color: var(--az-green-link);
+  border: 1px solid var(--az-chip-border);
+}
+.nav-item.active .nav-badge { background: rgba(46,216,142,0.15); }
+
+.sidebar-divider { height: 1px; background: var(--az-border); margin: 8px 14px; }
+
+.sidebar-scroll { flex: 1; overflow-y: auto; padding-bottom: 12px; }
+
+/* Past report items */
+.report-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 7px 10px; border-radius: var(--r);
+  cursor: pointer; transition: all 0.15s; margin: 0 2px;
+}
+.report-item:hover { background: var(--az-filter); }
+.report-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 5px;
+}
+.report-info { min-width: 0; }
+.report-name { font-size: 12px; font-weight: 500; color: var(--az-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.report-meta { font-size: 10px; color: var(--az-text-placeholder); margin-top: 1px; }
+
+/* Pinned query items */
+.pinned-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 10px; border-radius: var(--r);
+  cursor: pointer; font-size: 12px; color: var(--az-text-secondary);
+  transition: all 0.15s;
+}
+.pinned-item:hover { background: var(--az-filter); color: var(--az-text-primary); }
+.pin-icon { color: var(--az-text-placeholder); flex-shrink: 0; }
+
+/* ═══════════════════════════════════════
+   MAIN CONTENT PANEL
+   ═══════════════════════════════════════ */
+.main-panel {
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden; background: var(--az-bg);
+  min-width: 0;
+}
+
+/* Welcome / empty state */
+.welcome-state {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 32px; padding: 40px 20px;
+  animation: fadeUp 0.35s ease;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+
+.welcome-head { text-align: center; }
+.welcome-head h1 {
+  font-size: 24px; font-weight: 700; letter-spacing: -0.4px;
+  color: var(--az-text-primary);
+}
+.welcome-head h1 span { color: var(--az-green-link); }
+.welcome-head p { font-size: 14px; color: var(--az-text-secondary); margin-top: 6px; }
+
+/* Module pills in welcome */
+.module-pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.module-pill {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: var(--r-pill);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+  border: 1.5px solid; cursor: pointer; transition: all 0.15s;
+}
+.module-pill:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.mpill-pas { background: var(--az-chip-bg); color: var(--az-green-link); border-color: var(--az-chip-border); }
+.mpill-quot { background: #EEF2FF; color: #3451A3; border-color: #C7D2FE; }
+.mpill-rei { background: #FEF3E7; color: #B86000; border-color: #FCD8A0; }
+.mpill-fin { background: var(--az-success-bg); color: #0C7A3D; border-color: #A7EFCA; }
+
+/* Suggestion grid */
+.suggestion-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; max-width: 600px; width: 100%;
+}
+.suggestion-card {
+  background: var(--az-surface); border: 1px solid var(--az-border);
+  border-radius: var(--r-lg); padding: 14px 16px;
+  cursor: pointer; transition: all 0.18s; box-shadow: var(--shadow-xs);
+}
+.suggestion-card:hover {
+  border-color: var(--az-green);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.sc-module { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 5px; }
+.sc-text { font-size: 13px; color: var(--az-text-primary); line-height: 1.4; }
+.sc-arrow { font-size: 14px; color: var(--az-dark-25); margin-top: 6px; }
+.suggestion-card:hover .sc-arrow { color: var(--az-green); }
+.tag-pas   { color: var(--az-green-link); }
+.tag-quot  { color: var(--az-info); }
+.tag-rei   { color: var(--az-warning); }
+.tag-fin   { color: #0C7A3D; }
+
+/* ── CONVERSATION ── */
+.convo-area {
+  flex: 1; overflow-y: auto;
+  padding: 20px 32px; display: flex; flex-direction: column; gap: 16px;
+  scroll-behavior: smooth;
+}
+
+/* User bubble */
+.msg-user { display: flex; justify-content: flex-end; }
+.msg-user .bubble {
+  background: var(--az-dark); color: #FFFFFF;
+  border-radius: 12px 12px 2px 12px;
+  padding: 10px 15px; max-width: 520px;
+  font-size: 13.5px; line-height: 1.55;
+  box-shadow: var(--shadow-sm);
+  animation: fadeUp 0.2s ease;
+}
+
+/* AI bubble */
+.msg-ai { display: flex; gap: 10px; align-items: flex-start; animation: fadeUp 0.25s ease; }
+.ai-avatar {
+  width: 28px; height: 28px; border-radius: var(--r-sm); flex-shrink: 0;
+  background: var(--az-dark); display: flex; align-items: center; justify-content: center;
+  margin-top: 2px; border: 1.5px solid var(--az-green);
+}
+.ai-avatar svg { width: 14px; height: 14px; }
+.ai-bubble {
+  background: var(--az-surface);
+  border: 1px solid var(--az-border);
+  border-radius: 2px 12px 12px 12px;
+  padding: 14px 16px; max-width: 660px;
+  font-size: 13.5px; line-height: 1.6;
+  box-shadow: var(--shadow-sm);
+}
+.ai-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--az-green-link);
+  background: var(--az-chip-bg); border: 1px solid var(--az-chip-border);
+  padding: 2px 8px; border-radius: var(--r-pill); margin-bottom: 10px;
+}
+.ai-tag .ai-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--az-green);
+  animation: pulse 1.5s infinite;
+}
+
+/* Typing indicator */
+.typing-dots { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+.typing-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--az-green); opacity: 0.4;
+  animation: blink 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* ── DATA COMPONENTS inside AI bubble ── */
+.metric-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+.metric-card {
+  flex: 1; min-width: 100px;
+  background: var(--az-bg); border: 1px solid var(--az-border);
+  border-radius: var(--r-md); padding: 10px 12px;
+}
+.mc-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: var(--az-text-secondary); margin-bottom: 4px; }
+.mc-value { font-size: 19px; font-weight: 700; color: var(--az-text-primary); line-height: 1; }
+.mc-delta { font-size: 11px; font-weight: 500; margin-top: 3px; }
+.delta-up   { color: var(--az-success); }
+.delta-down { color: var(--az-error); }
+.delta-mid  { color: var(--az-warning); }
+
+/* AZ Table */
+.az-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12.5px; }
+.az-table thead tr { background: var(--az-table-header); }
+.az-table th {
+  padding: 8px 12px; text-align: left;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;
+  color: var(--az-text-secondary); border-bottom: 1px solid var(--az-border);
+  white-space: nowrap;
+}
+.az-table td {
+  padding: 9px 12px; border-bottom: 1px solid var(--az-filter);
+  color: var(--az-text-primary);
+}
+.az-table tbody tr:hover td { background: var(--az-bg); }
+.az-table tbody tr:last-child td { border-bottom: none; }
+.val-pos { color: var(--az-success); font-weight: 600; }
+.val-neg { color: var(--az-error); font-weight: 600; }
+.val-mid { color: var(--az-warning); font-weight: 600; }
+
+/* Status chips */
+.status-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: var(--r-pill);
+}
+.chip-green { background: var(--az-success-bg); color: #0C7A3D; }
+.chip-red   { background: var(--az-error-bg);   color: var(--az-error); }
+.chip-amber { background: var(--az-warning-bg); color: #B86000; }
+.chip-blue  { background: var(--az-info-bg);    color: var(--az-info); }
+
+/* Confidence bar */
+.confidence-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--az-filter); }
+.conf-label { font-size: 11px; color: var(--az-text-secondary); flex-shrink: 0; }
+.conf-track { height: 4px; border-radius: 2px; background: var(--az-filter); flex: 1; max-width: 100px; overflow: hidden; }
+.conf-fill { height: 100%; border-radius: 2px; background: var(--az-green); }
+.conf-pct { font-size: 11px; font-weight: 700; color: var(--az-green-link); flex-shrink: 0; }
+
+/* Source tags */
+.source-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+.source-tag {
+  font-size: 11px; padding: 2px 8px; border-radius: var(--r-pill);
+  background: var(--az-bg); border: 1px solid var(--az-border);
+  color: var(--az-text-secondary); cursor: pointer; transition: all 0.15s;
+}
+.source-tag:hover { border-color: var(--az-green); color: var(--az-green-link); }
+
+/* Section header inside AI */
+.ai-section-head {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px;
+  text-transform: uppercase; color: var(--az-text-secondary);
+  margin: 12px 0 6px; display: flex; align-items: center; gap: 6px;
+}
+.ai-section-head::after { content: ''; flex: 1; height: 1px; background: var(--az-border); }
+
+/* Alert strip */
+.alert-strip {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 9px 12px; border-radius: var(--r); margin-top: 10px;
+  font-size: 12.5px;
+}
+.alert-warning { background: var(--az-warning-bg); border: 1px solid #FCD8A0; color: #7A4000; }
+.alert-error   { background: var(--az-error-bg);   border: 1px solid #FAB8BE; color: #8B0D1A; }
+.alert-info    { background: var(--az-info-bg);     border: 1px solid #C7D2FE; color: #1E3A7A; }
+
+/* ═══════════════════════════════════════
+   PROMPT BAR  (Azentio input field style)
+   ═══════════════════════════════════════ */
+.prompt-zone {
+  padding: 12px 24px 14px;
+  background: var(--az-surface);
+  border-top: 1px solid var(--az-border);
+  flex-shrink: 0;
+}
+
+.prompt-wrapper {
+  background: var(--az-surface);
+  border: 1.5px solid var(--az-border);
+  border-radius: var(--r-lg);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+.prompt-wrapper:focus-within {
+  border-color: var(--az-green);
+  box-shadow: 0 0 0 3px rgba(46,216,142,0.12);
+}
+
+.prompt-input {
+  width: 100%; padding: 11px 14px 9px;
+  background: transparent; border: none; outline: none;
+  color: var(--az-text-primary); font-family: 'Inter', sans-serif;
+  font-size: 13.5px; resize: none; max-height: 110px; line-height: 1.5;
+}
+.prompt-input::placeholder { color: var(--az-text-placeholder); }
+
+.prompt-footer {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 10px; border-top: 1px solid var(--az-border);
+  background: var(--az-bg);
+}
+
+/* Context chips  (Azentio chip style) */
+.ctx-chip {
+  display: flex; align-items: center; gap: 4px;
+  height: 24px; padding: 0 10px; border-radius: var(--r-pill);
+  font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid var(--az-border);
+  background: var(--az-surface); color: var(--az-text-secondary);
+  transition: all 0.15s;
+}
+.ctx-chip:hover { border-color: var(--az-green); color: var(--az-green-link); background: var(--az-chip-bg); }
+.ctx-chip.on { background: var(--az-chip-bg); border-color: var(--az-chip-border); color: var(--az-green-link); font-weight: 600; }
+.ctx-chip .chip-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+/* Primary send button (Azentio primary button) */
+.send-btn {
+  margin-left: auto;
+  background: var(--az-btn-primary); color: var(--az-btn-primary-text);
+  border: none; border-radius: var(--r);
+  padding: 0 16px; height: 30px;
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; gap: 6px;
+  transition: all 0.15s; white-space: nowrap;
+}
+.send-btn:hover { background: var(--az-btn-primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.send-btn:active { transform: translateY(0); }
+.send-btn:disabled { background: var(--az-text-disabled); cursor: not-allowed; transform: none; box-shadow: none; }
+
+.prompt-hint { font-size: 11px; color: var(--az-text-placeholder); margin-top: 6px; text-align: center; }
+
+/* ═══════════════════════════════════════
+   RIGHT PANEL
+   ═══════════════════════════════════════ */
+.right-panel {
+  width: var(--right-w); flex-shrink: 0;
+  background: var(--az-surface);
+  border-left: 1px solid var(--az-border);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.rp-header {
+  padding: 12px 14px 0;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase;
+  color: var(--az-text-placeholder); border-bottom: 1px solid var(--az-border);
+  padding-bottom: 10px;
+}
+.rp-section { padding: 10px 12px 6px; }
+.rp-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+  color: var(--az-text-placeholder); margin-bottom: 6px; display: block;
+}
+.rp-divider { height: 1px; background: var(--az-border); }
+
+/* History items */
+.history-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 7px 8px; border-radius: var(--r);
+  cursor: pointer; transition: all 0.15s;
+}
+.history-item:hover { background: var(--az-filter); }
+.hi-num {
+  width: 18px; height: 18px; border-radius: var(--r-xs);
+  background: var(--az-filter); color: var(--az-text-secondary);
+  font-size: 10px; font-weight: 700; display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.hi-text { font-size: 12px; color: var(--az-text-primary); line-height: 1.4; }
+.hi-meta { font-size: 10px; color: var(--az-text-placeholder); margin-top: 1px; }
+
+/* Suggest items */
+.suggest-item {
+  display: flex; align-items: flex-start; gap: 6px;
+  padding: 7px 8px; border-radius: var(--r);
+  cursor: pointer; font-size: 12px; color: var(--az-text-secondary);
+  background: var(--az-bg); border: 1px solid var(--az-border);
+  margin-bottom: 5px; transition: all 0.15s; line-height: 1.4;
+}
+.suggest-item:hover { border-color: var(--az-green); color: var(--az-text-primary); background: var(--az-chip-bg); }
+.suggest-arrow { color: var(--az-green); flex-shrink: 0; font-size: 11px; margin-top: 1px; }
+
+/* Market insight cards */
+.insight-card {
+  background: var(--az-surface); border: 1px solid var(--az-border);
+  border-radius: var(--r-md); padding: 10px 12px; margin-bottom: 6px;
+  cursor: pointer; transition: all 0.15s; box-shadow: var(--shadow-xs);
+}
+.insight-card:hover { border-color: var(--az-green); box-shadow: var(--shadow-sm); }
+.insight-card:first-child { border-top: 3px solid var(--az-green); }
+.ic-label { font-size: 10px; font-weight: 600; color: var(--az-text-secondary); text-transform: uppercase; letter-spacing: 0.4px; }
+.ic-value { font-size: 20px; font-weight: 700; color: var(--az-text-primary); margin: 2px 0; line-height: 1; }
+.ic-sub { font-size: 10.5px; color: var(--az-text-placeholder); }
+.ic-trend-up   { color: var(--az-success); }
+.ic-trend-down { color: var(--az-error); }
+.ic-trend-flat { color: var(--az-warning); }
+
+.rp-scroll { flex: 1; overflow-y: auto; }
+
+/* Empty state in right panel */
+.rp-empty { font-size: 12px; color: var(--az-text-placeholder); padding: 4px 6px; }
+
+/* ═══════════════════════════════════════
+   STATUS BAR
+   ═══════════════════════════════════════ */
+.statusbar {
+  height: var(--statusbar-h);
+  background: var(--az-dark);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 16px; font-size: 10.5px; color: rgba(255,255,255,0.35);
+  flex-shrink: 0;
+}
+.statusbar .status-live { display: flex; align-items: center; gap: 4px; color: var(--az-green); }
+.statusbar .status-live .sdot { width: 5px; height: 5px; border-radius: 50%; background: var(--az-green); }
+.statusbar span { display: flex; align-items: center; gap: 4px; }
+
+/* ── MISC ── */
+.hl-green  { color: var(--az-green-link); font-weight: 600; }
+.hl-red    { color: var(--az-error); }
+.hl-orange { color: var(--az-warning); }
+
+</style>
+</head>
+<body>
+
+<!-- ── TOP NAVIGATION ── -->
+<nav class="topnav">
+  <div class="topnav-logo">
+    <div class="logo-mark">
+      <!-- Azentio "A" mark -->
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 2L15 14H3L9 2Z" fill="#16303D" stroke="#16303D" stroke-width="0.5" stroke-linejoin="round"/>
+        <path d="M5.5 10.5H12.5" stroke="#2ED88E" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">AZIC</span>
+      <span class="logo-sub">AI Reporting</span>
+    </div>
+  </div>
+
+  <div class="topnav-center">
+    <div class="nav-module-tabs">
+      <button class="nav-module-tab active" onclick="setModule('all',this)">All Modules</button>
+      <button class="nav-module-tab" onclick="setModule('pas',this)">PAS</button>
+      <button class="nav-module-tab" onclick="setModule('quotation',this)">Quotation</button>
+      <button class="nav-module-tab" onclick="setModule('reinsurance',this)">Reinsurance</button>
+      <button class="nav-module-tab" onclick="setModule('finance',this)">Finance</button>
+    </div>
+  </div>
+
+  <div class="topnav-right">
+    <div class="topnav-badge"><div class="dot"></div> Live Data</div>
+    <div class="topnav-divider"></div>
+    <!-- Notification icon -->
+    <button class="topnav-icon" title="Notifications">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M8 1.5a4.5 4.5 0 0 0-4.5 4.5c0 1.5-.5 3-1.5 4h12c-1-1-1.5-2.5-1.5-4A4.5 4.5 0 0 0 8 1.5Z"/>
+        <path d="M6.5 13.5a1.5 1.5 0 0 0 3 0"/>
+      </svg>
+    </button>
+    <!-- Settings icon -->
+    <button class="topnav-icon" title="Settings">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+        <circle cx="8" cy="8" r="2.5"/>
+        <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/>
+      </svg>
+    </button>
+    <div class="topnav-divider"></div>
+    <div class="avatar-btn" title="Poojitha D">PD</div>
+  </div>
+</nav>
+
+<!-- ── APP BODY ── -->
+<div class="app-body">
+
+  <!-- ── LEFT SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <span class="sidebar-label">Workspace</span>
+      <div class="nav-item active" onclick="selectNav(this)">
+        <span class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="1" y="1" width="5.5" height="5.5" rx="1.2"/>
+            <rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2"/>
+            <rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2"/>
+            <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2"/>
+          </svg>
+        </span>
+        AI Reports
+        <span class="nav-badge">New</span>
+      </div>
+      <div class="nav-item" onclick="selectNav(this)">
+        <span class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 3h11M2 7h11M2 11h7"/>
+          </svg>
+        </span>
+        PAS Summary
+      </div>
+      <div class="nav-item" onclick="selectNav(this)">
+        <span class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M13 7H8V2M8 2L5 5M8 2l3 3"/>
+            <path d="M2 8h5v5M7 13l-3-3M7 13l3-3"/>
+          </svg>
+        </span>
+        Quotations
+        <span class="nav-badge">12</span>
+      </div>
+      <div class="nav-item" onclick="selectNav(this)">
+        <span class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="7.5" cy="7.5" r="5.5"/>
+            <path d="M7.5 4v3.5l2.5 2"/>
+          </svg>
+        </span>
+        Reinsurance
+      </div>
+      <div class="nav-item" onclick="selectNav(this)">
+        <span class="nav-icon">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="4" width="11" height="8" rx="1.2"/>
+            <path d="M5 4V3a2.5 2.5 0 0 1 5 0v1"/>
+          </svg>
+        </span>
+        Finance
+        <span class="nav-badge">3</span>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-scroll">
+      <div class="sidebar-section">
+        <span class="sidebar-label">Past Reports</span>
+        <div class="report-item" onclick="loadReport('reinsurance')">
+          <div class="report-dot" style="background: var(--az-warning)"></div>
+          <div class="report-info">
+            <div class="report-name">Reinsurance Bordereaux</div>
+            <div class="report-meta">Q1 2026 · Apr 18</div>
+          </div>
+        </div>
+        <div class="report-item" onclick="loadReport('claims')">
+          <div class="report-dot" style="background: var(--az-error)"></div>
+          <div class="report-info">
+            <div class="report-name">Claim Triangle Report</div>
+            <div class="report-meta">FY 2025 · Mar 31</div>
+          </div>
+        </div>
+        <div class="report-item" onclick="loadReport('premium')">
+          <div class="report-dot" style="background: var(--az-green)"></div>
+          <div class="report-info">
+            <div class="report-name">Premium Summary — Motor</div>
+            <div class="report-meta">Mar 2026 · Apr 5</div>
+          </div>
+        </div>
+        <div class="report-item" onclick="loadReport('ulip')">
+          <div class="report-dot" style="background: var(--az-info)"></div>
+          <div class="report-info">
+            <div class="report-name">Health ULIP Claims Ratio</div>
+            <div class="report-meta">2025 Annual · Jan 20</div>
+          </div>
+        </div>
+        <div class="report-item" onclick="loadReport('finance')">
+          <div class="report-dot" style="background: var(--az-success)"></div>
+          <div class="report-info">
+            <div class="report-name">Finance Reconciliation</div>
+            <div class="report-meta">Q4 2025 · Feb 14</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section">
+        <span class="sidebar-label">Pinned Queries</span>
+        <div class="pinned-item" onclick="fillPrompt('Monthly GWP vs target across all LoB for Q1 2026')">
+          <span class="pin-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M8.5 1.5L10.5 3.5L7 5L6 6L5 7L3.5 5.5L1.5 8.5L5 5L6 4L7.5 2.5L8.5 1.5Z"/></svg>
+          </span>
+          GWP vs Target Q1 2026
+        </div>
+        <div class="pinned-item" onclick="fillPrompt('Top 10 brokers by new business premium March 2026')">
+          <span class="pin-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M8.5 1.5L10.5 3.5L7 5L6 6L5 7L3.5 5.5L1.5 8.5L5 5L6 4L7.5 2.5L8.5 1.5Z"/></svg>
+          </span>
+          Broker Leaderboard Mar
+        </div>
+        <div class="pinned-item" onclick="fillPrompt('Combined ratio trend last 12 months by line of business')">
+          <span class="pin-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M8.5 1.5L10.5 3.5L7 5L6 6L5 7L3.5 5.5L1.5 8.5L5 5L6 4L7.5 2.5L8.5 1.5Z"/></svg>
+          </span>
+          Combined Ratio Trend
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN PANEL ── -->
+  <main class="main-panel">
+
+    <!-- Welcome state -->
+    <div class="welcome-state" id="welcomeState">
+      <div class="welcome-head">
+        <h1>Good morning, <span>Poojitha</span> ✦</h1>
+        <p>Ask anything across your insurance data — prompt, and get instant structured insights.</p>
+      </div>
+
+      <!-- Module pills -->
+      <div class="module-pills">
+        <span class="module-pill mpill-pas" onclick="setModuleFilter('PAS')">● PAS</span>
+        <span class="module-pill mpill-quot" onclick="setModuleFilter('Quotation')">● Quotation</span>
+        <span class="module-pill mpill-rei" onclick="setModuleFilter('Reinsurance')">● Reinsurance</span>
+        <span class="module-pill mpill-fin" onclick="setModuleFilter('Finance')">● Finance</span>
+      </div>
+
+      <!-- Suggestion grid -->
+      <div class="suggestion-grid">
+        <div class="suggestion-card" onclick="fillAndSend('Give me premium for Motor - Toyota for March 2026')">
+          <div class="sc-module tag-pas">PAS · Motor</div>
+          <div class="sc-text">Premium breakdown — Motor Toyota, March 2026</div>
+          <div class="sc-arrow">↗</div>
+        </div>
+        <div class="suggestion-card" onclick="fillAndSend('What is claim ratio for Health - ULIP policy 2025')">
+          <div class="sc-module tag-quot">PAS · Health</div>
+          <div class="sc-text">Claim ratio for Health ULIP policy, full year 2025</div>
+          <div class="sc-arrow">↗</div>
+        </div>
+        <div class="suggestion-card" onclick="fillAndSend('Show reinsurance bordereaux summary for Q1 2026')">
+          <div class="sc-module tag-rei">Reinsurance</div>
+          <div class="sc-text">Reinsurance bordereaux summary, Q1 2026</div>
+          <div class="sc-arrow">↗</div>
+        </div>
+        <div class="suggestion-card" onclick="fillAndSend('Finance reconciliation status and outstanding items April 2026')">
+          <div class="sc-module tag-fin">Finance</div>
+          <div class="sc-text">Finance reconciliation & outstanding items, Apr 2026</div>
+          <div class="sc-arrow">↗</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conversation area -->
+    <div class="convo-area" id="convoArea" style="display:none"></div>
+
+    <!-- Prompt bar -->
+    <div class="prompt-zone">
+      <div class="prompt-wrapper">
+        <textarea class="prompt-input" id="promptInput" rows="2"
+          placeholder="Ask anything — e.g. 'Premium for Motor Toyota March 2026' or 'Claim ratio Health ULIP 2025'…"
+          onkeydown="handleKey(event)"></textarea>
+        <div class="prompt-footer">
+          <button class="ctx-chip on" id="ctx-all" onclick="toggleCtx('all',this)"><span class="chip-dot"></span>All</button>
+          <button class="ctx-chip" id="ctx-pas" onclick="toggleCtx('pas',this)">PAS</button>
+          <button class="ctx-chip" id="ctx-quot" onclick="toggleCtx('quot',this)">Quotation</button>
+          <button class="ctx-chip" id="ctx-rei" onclick="toggleCtx('rei',this)">Reinsurance</button>
+          <button class="ctx-chip" id="ctx-fin" onclick="toggleCtx('fin',this)">Finance</button>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+            Ask AI
+          </button>
+        </div>
+      </div>
+      <p class="prompt-hint">⌘↵ to send · Shift↵ for new line · AI synthesises from live ORI data</p>
+    </div>
+  </main>
+
+  <!-- ── RIGHT PANEL ── -->
+  <aside class="right-panel">
+    <div class="rp-section" style="padding-top:14px">
+      <span class="rp-label">Past History</span>
+      <div id="historyList">
+        <div class="rp-empty">Your recent queries will appear here.</div>
+      </div>
+    </div>
+
+    <div class="rp-divider"></div>
+
+    <div class="rp-section" style="padding-top:10px">
+      <span class="rp-label">You May Want to Know</span>
+      <div id="suggestList">
+        <div class="suggest-item" onclick="fillAndSend('Loss ratio trend Motor vs Health YTD 2026')">
+          <span class="suggest-arrow">↗</span> Loss ratio trend Motor vs Health YTD 2026
+        </div>
+        <div class="suggest-item" onclick="fillAndSend('Expiring policies next 30 days across all LoB')">
+          <span class="suggest-arrow">↗</span> Expiring policies next 30 days — all LoB
+        </div>
+        <div class="suggest-item" onclick="fillAndSend('Top reinsurance treaties by ceded premium Q1 2026')">
+          <span class="suggest-arrow">↗</span> Top reinsurance treaties by ceded premium
+        </div>
+        <div class="suggest-item" onclick="fillAndSend('Outstanding premium collections by broker April 2026')">
+          <span class="suggest-arrow">↗</span> Outstanding collections by broker, Apr 2026
+        </div>
+      </div>
+    </div>
+
+    <div class="rp-divider"></div>
+
+    <div class="rp-scroll">
+      <div class="rp-section" style="padding-top:10px">
+        <span class="rp-label">Market Insights</span>
+
+        <div class="insight-card" onclick="fillAndSend('How does our combined ratio compare to market benchmark 2026')">
+          <div class="ic-label">Industry Combined Ratio</div>
+          <div class="ic-value ic-trend-flat">96.4%</div>
+          <div class="ic-sub">Market avg · IRDAI Q4 2025</div>
+        </div>
+        <div class="insight-card" onclick="fillAndSend('Motor insurance market growth rate India 2026')">
+          <div class="ic-label">Motor GWP Growth</div>
+          <div class="ic-value ic-trend-up">+14.2%</div>
+          <div class="ic-sub">India market YoY · Apr 2026</div>
+        </div>
+        <div class="insight-card" onclick="fillAndSend('Health insurance claim inflation trend 2025 2026')">
+          <div class="ic-label">Health Claim Inflation</div>
+          <div class="ic-value ic-trend-down">+8.7%</div>
+          <div class="ic-sub">Medical cost trend · FY 2025</div>
+        </div>
+        <div class="insight-card" onclick="fillAndSend('Reinsurance rate hardening impact on treaty renewals 2026')">
+          <div class="ic-label">Reinsurance Rate Index</div>
+          <div class="ic-value ic-trend-up">+6.1%</div>
+          <div class="ic-sub">Treaty renewals · Jan 2026</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ── STATUS BAR ── -->
+<div class="statusbar">
+  <span class="status-live"><div class="sdot"></div> Connected to ORI</span>
+  <span>·</span>
+  <span>PAS · Quotation · Reinsurance · Finance</span>
+  <span>·</span>
+  <span id="statusTime">Synced just now</span>
+  <span style="margin-left:auto; color: rgba(255,255,255,0.2)">AZIC Insure Core · AI Reporting v0.3 · Azentio Global DS</span>
+</div>
+
+<script>
+/* ── STATE ── */
+let historyItems = [];
+let conversationStarted = false;
+
+/* ── MODULE TABS ── */
+function setModule(mod, el) {
+  document.querySelectorAll('.nav-module-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const ctxMap = {all:'ctx-all',pas:'ctx-pas',quotation:'ctx-quot',reinsurance:'ctx-rei',finance:'ctx-fin'};
+  document.querySelectorAll('.ctx-chip').forEach(c => c.classList.remove('on'));
+  if (ctxMap[mod]) document.getElementById(ctxMap[mod]).classList.add('on');
+}
+function setModuleFilter(name) {
+  document.getElementById('promptInput').placeholder = `Ask anything about ${name}…`;
+  document.getElementById('promptInput').focus();
+}
+function toggleCtx(id, el) { el.classList.toggle('on'); }
+function selectNav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ── PROMPT HELPERS ── */
+function fillPrompt(text) {
+  document.getElementById('promptInput').value = text;
+  document.getElementById('promptInput').focus();
+}
+function fillAndSend(text) {
+  document.getElementById('promptInput').value = text;
+  sendMessage();
+}
+function handleKey(e) {
+  if ((e.key === 'Enter' && e.metaKey) || (e.key === 'Enter' && !e.shiftKey)) {
+    e.preventDefault(); sendMessage();
+  }
+}
+
+/* ── CONVERSATION ── */
+function sendMessage() {
+  const input = document.getElementById('promptInput');
+  const text = input.value.trim();
+  if (!text) return;
+  startConversation();
+  input.value = '';
+  document.getElementById('sendBtn').disabled = true;
+  addUserMsg(text);
+  addToHistory(text);
+  addTyping();
+  const delay = 850 + Math.random() * 500;
+  setTimeout(() => {
+    removeTyping();
+    addAIMsg(buildResponse(text));
+    document.getElementById('sendBtn').disabled = false;
+    updateSuggestions(text);
+  }, delay);
+}
+
+function startConversation() {
+  if (!conversationStarted) {
+    document.getElementById('welcomeState').style.display = 'none';
+    document.getElementById('convoArea').style.display = 'flex';
+    conversationStarted = true;
+  }
+}
+
+function addUserMsg(text) {
+  const a = document.getElementById('convoArea');
+  a.innerHTML += `<div class="msg-user"><div class="bubble">${esc(text)}</div></div>`;
+  scroll();
+}
+
+function addTyping() {
+  document.getElementById('convoArea').innerHTML += `
+    <div class="msg-ai" id="typingBubble">
+      <div class="ai-avatar">${aiIcon()}</div>
+      <div class="ai-bubble"><div class="typing-dots">
+        <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+      </div></div>
+    </div>`;
+  scroll();
+}
+function removeTyping() { document.getElementById('typingBubble')?.remove(); }
+
+function addAIMsg(html) {
+  document.getElementById('convoArea').innerHTML += `
+    <div class="msg-ai">
+      <div class="ai-avatar">${aiIcon()}</div>
+      <div class="ai-bubble">${html}</div>
+    </div>`;
+  scroll();
+}
+
+function aiIcon() {
+  return `<svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M7 1.5L11.5 10H2.5L7 1.5Z" fill="#2ED88E" stroke="none"/>
+    <path d="M4.5 7.5H9.5" stroke="#16303D" stroke-width="1.2" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function scroll() {
+  const a = document.getElementById('convoArea');
+  a.scrollTop = a.scrollHeight;
+}
+
+function addToHistory(text) {
+  historyItems.unshift({ text, time: 'just now' });
+  if (historyItems.length > 7) historyItems.pop();
+  const list = document.getElementById('historyList');
+  list.innerHTML = historyItems.map((item, i) => `
+    <div class="history-item" onclick="fillAndSend('${escAttr(item.text)}')">
+      <div class="hi-num">${i+1}</div>
+      <div>
+        <div class="hi-text">${esc(item.text.length > 48 ? item.text.slice(0,48)+'…' : item.text)}</div>
+        <div class="hi-meta">${item.time}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── RESPONSE BUILDER ── */
+function buildResponse(text) {
+  const q = text.toLowerCase();
+
+  if (q.includes('premium') && q.includes('motor') && q.includes('toyota')) {
+    return `
+      <div class="ai-tag"><span class="ai-dot"></span> PAS · Motor · Premium</div>
+      <p>Premium breakdown for <strong>Motor — Toyota</strong>, <span class="hl-green">March 2026</span>:</p>
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="mc-label">Gross Written</div>
+          <div class="mc-value">₹4.82 Cr</div>
+          <div class="mc-delta delta-up">↑ 12.3% MoM</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Net Written</div>
+          <div class="mc-value">₹3.61 Cr</div>
+          <div class="mc-delta delta-up">↑ 9.8% MoM</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Policies</div>
+          <div class="mc-value">1,847</div>
+          <div class="mc-delta delta-up">↑ 7.2%</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Avg Premium</div>
+          <div class="mc-value">₹26,096</div>
+          <div class="mc-delta delta-mid">↑ 4.7%</div>
+        </div>
+      </div>
+      <div class="ai-section-head">By Vehicle Variant</div>
+      <table class="az-table">
+        <thead><tr><th>Model</th><th>Policies</th><th>GWP (₹ L)</th><th>Avg Premium</th><th>vs Feb</th></tr></thead>
+        <tbody>
+          <tr><td>Innova Crysta</td><td>412</td><td>182.4</td><td>₹44,272</td><td class="val-pos">+8.1%</td></tr>
+          <tr><td>Fortuner</td><td>287</td><td>204.1</td><td>₹71,115</td><td class="val-pos">+15.4%</td></tr>
+          <tr><td>Camry</td><td>94</td><td>89.2</td><td>₹94,894</td><td class="val-pos">+3.2%</td></tr>
+          <tr><td>Glanza</td><td>638</td><td>115.8</td><td>₹18,150</td><td class="val-neg">-2.1%</td></tr>
+          <tr><td>Urban Cruiser</td><td>416</td><td>90.5</td><td>₹21,755</td><td class="val-pos">+6.7%</td></tr>
+        </tbody>
+      </table>
+      <div class="confidence-row">
+        <span class="conf-label">Confidence</span>
+        <div class="conf-track"><div class="conf-fill" style="width:94%"></div></div>
+        <span class="conf-pct">94%</span>
+        <span class="conf-label" style="margin-left:4px">— from PAS policy ledger</span>
+      </div>
+      <div class="source-row">
+        <span class="source-tag">PAS Ledger · Mar 2026</span>
+        <span class="source-tag">Premium Register ORI</span>
+        <span class="source-tag">Motor Book Q1 2026</span>
+      </div>`;
+  }
+
+  if (q.includes('claim') && q.includes('health') && (q.includes('ulip') || q.includes('ratio'))) {
+    return `
+      <div class="ai-tag"><span class="ai-dot"></span> PAS · Health · Claims</div>
+      <p>Claim ratio for <strong>Health — ULIP Policy</strong>, <span class="hl-green">Full Year 2025</span>:</p>
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="mc-label">Claim Ratio</div>
+          <div class="mc-value" style="color:var(--az-warning)">71.4%</div>
+          <div class="mc-delta delta-mid">▲ vs 68.2% (2024)</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Claims Incurred</div>
+          <div class="mc-value">₹28.7 Cr</div>
+          <div class="mc-delta delta-down">↑ 18.6% YoY</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Earned Premium</div>
+          <div class="mc-value">₹40.2 Cr</div>
+          <div class="mc-delta delta-up">↑ 14.1% YoY</div>
+        </div>
+      </div>
+      <div class="ai-section-head">Quarterly Trend — 2025</div>
+      <table class="az-table">
+        <thead><tr><th>Quarter</th><th>Claims (₹ Cr)</th><th>Earned Prem (₹ Cr)</th><th>Claim Ratio</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Q1 2025</td><td>5.8</td><td>9.4</td><td class="val-pos">61.7%</td><td><span class="status-chip chip-green">Normal</span></td></tr>
+          <tr><td>Q2 2025</td><td>6.4</td><td>9.8</td><td class="val-mid">65.3%</td><td><span class="status-chip chip-blue">Watch</span></td></tr>
+          <tr><td>Q3 2025</td><td>7.9</td><td>10.4</td><td class="val-neg">76.0%</td><td><span class="status-chip chip-red">High</span></td></tr>
+          <tr><td>Q4 2025</td><td>8.6</td><td>10.6</td><td class="val-neg">81.1%</td><td><span class="status-chip chip-red">High</span></td></tr>
+        </tbody>
+      </table>
+      <div class="alert-strip alert-warning">⚠ Q3 & Q4 exceed the 75% threshold. Driven primarily by a 22% rise in hospitalisations — dengue and respiratory admissions contributed ₹3.2 Cr in Q4.</div>
+      <div class="confidence-row">
+        <span class="conf-label">Confidence</span>
+        <div class="conf-track"><div class="conf-fill" style="width:88%"></div></div>
+        <span class="conf-pct">88%</span>
+        <span class="conf-label" style="margin-left:4px">— IBNR adjustments pending for Q4</span>
+      </div>
+      <div class="source-row">
+        <span class="source-tag">Claims Register 2025</span>
+        <span class="source-tag">Health ULIP Policy Master</span>
+        <span class="source-tag">Earned Premium Schedule</span>
+      </div>`;
+  }
+
+  if (q.includes('reinsurance') && (q.includes('bordereaux') || q.includes('summary'))) {
+    return `
+      <div class="ai-tag"><span class="ai-dot"></span> Reinsurance · Bordereaux · Q1 2026</div>
+      <p>Reinsurance bordereaux summary for <span class="hl-green">Q1 2026</span> across all treaty classes:</p>
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="mc-label">Ceded Premium</div>
+          <div class="mc-value">₹12.4 Cr</div>
+          <div class="mc-delta delta-down">↑ 6.1% treaty renewal</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Ceded Claims</div>
+          <div class="mc-value">₹8.1 Cr</div>
+          <div class="mc-delta delta-up">↓ 3.2% YoY</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Ri Commission</div>
+          <div class="mc-value">₹1.86 Cr</div>
+          <div class="mc-delta delta-mid">15.0% rate</div>
+        </div>
+      </div>
+      <div class="ai-section-head">Treaty Breakdown</div>
+      <table class="az-table">
+        <thead><tr><th>Treaty</th><th>Class</th><th>Ceded Prem</th><th>Ceded Claims</th><th>C/P Ratio</th></tr></thead>
+        <tbody>
+          <tr><td>Prop QS Treaty A</td><td>Motor</td><td>₹3.8 Cr</td><td>₹2.4 Cr</td><td class="val-pos">63.2%</td></tr>
+          <tr><td>Prop QS Treaty B</td><td>Health</td><td>₹4.2 Cr</td><td>₹3.1 Cr</td><td class="val-mid">73.8%</td></tr>
+          <tr><td>XL Treaty — Marine</td><td>Marine</td><td>₹2.1 Cr</td><td>₹1.2 Cr</td><td class="val-pos">57.1%</td></tr>
+          <tr><td>Cat XL — Property</td><td>Property</td><td>₹2.3 Cr</td><td>₹1.4 Cr</td><td class="val-pos">60.9%</td></tr>
+        </tbody>
+      </table>
+      <div class="alert-strip alert-info">📋 Bordereaux submission to Munich Re due <strong>30 April 2026</strong>. Health treaty approaching 75% — flag for quota adjustment review.</div>
+      <div class="confidence-row">
+        <span class="conf-label">Confidence</span>
+        <div class="conf-track"><div class="conf-fill" style="width:91%"></div></div>
+        <span class="conf-pct">91%</span>
+      </div>
+      <div class="source-row">
+        <span class="source-tag">RI Treaty Register</span>
+        <span class="source-tag">Cession Statement Q1</span>
+        <span class="source-tag">Claims Ceded Ledger</span>
+      </div>`;
+  }
+
+  if (q.includes('finance') && (q.includes('reconciliation') || q.includes('outstanding'))) {
+    return `
+      <div class="ai-tag"><span class="ai-dot"></span> Finance · Reconciliation · Apr 2026</div>
+      <p>Finance reconciliation status as of <span class="hl-green">27 April 2026</span>:</p>
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="mc-label">Reconciled</div>
+          <div class="mc-value" style="color:var(--az-success)">84%</div>
+          <div class="mc-delta delta-up">of total items</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Outstanding</div>
+          <div class="mc-value" style="color:var(--az-error)">₹3.2 Cr</div>
+          <div class="mc-delta delta-down">23 items open</div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Overdue &gt;30d</div>
+          <div class="mc-value" style="color:var(--az-warning)">₹0.9 Cr</div>
+          <div class="mc-delta delta-mid">7 items</div>
+        </div>
+      </div>
+      <div class="ai-section-head">Outstanding by Category</div>
+      <table class="az-table">
+        <thead><tr><th>Category</th><th>Items</th><th>Amount (₹ L)</th><th>Oldest</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Premium Receipts</td><td>8</td><td>142.4</td><td>Mar 12</td><td><span class="status-chip chip-blue">In Progress</span></td></tr>
+          <tr><td>Claims Payments</td><td>6</td><td>88.7</td><td>Mar 28</td><td><span class="status-chip chip-amber">Pending</span></td></tr>
+          <tr><td>Ri Settlements</td><td>4</td><td>64.2</td><td>Feb 14</td><td><span class="status-chip chip-red">Overdue</span></td></tr>
+          <tr><td>Commission Payables</td><td>5</td><td>24.9</td><td>Apr 2</td><td><span class="status-chip chip-green">Processing</span></td></tr>
+        </tbody>
+      </table>
+      <div class="confidence-row">
+        <span class="conf-label">Confidence</span>
+        <div class="conf-track"><div class="conf-fill" style="width:96%"></div></div>
+        <span class="conf-pct">96%</span>
+      </div>
+      <div class="source-row">
+        <span class="source-tag">Finance Ledger ORI</span>
+        <span class="source-tag">Bank Statement Apr 2026</span>
+        <span class="source-tag">Claims Payment Register</span>
+      </div>`;
+  }
+
+  /* Generic fallback */
+  return `
+    <div class="ai-tag"><span class="ai-dot"></span> AI Analysis · All Modules</div>
+    <p>Searched across <strong>PAS · Quotation · Reinsurance · Finance</strong> for your query.</p>
+    <div class="metric-row">
+      <div class="metric-card"><div class="mc-label">Records Found</div><div class="mc-value">2,847</div><div class="mc-delta">across 4 modules</div></div>
+      <div class="metric-card"><div class="mc-label">Time Range</div><div class="mc-value" style="font-size:15px">Q1 2026</div><div class="mc-delta">Jan–Mar 2026</div></div>
+    </div>
+    <p style="margin-top:8px;color:var(--az-text-secondary);font-size:13px;">For a more precise result, try specifying a <strong style="color:var(--az-text-primary)">line of business</strong>, <strong style="color:var(--az-text-primary)">date range</strong>, or <strong style="color:var(--az-text-primary)">metric</strong> (premium, claims ratio, GWP…).</p>
+    <div class="confidence-row">
+      <span class="conf-label">Confidence</span>
+      <div class="conf-track"><div class="conf-fill" style="width:68%"></div></div>
+      <span class="conf-pct">68%</span>
+      <span class="conf-label" style="margin-left:4px">— refine query for higher accuracy</span>
+    </div>
+    <div class="source-row">
+      <span class="source-tag">PAS Policy Master</span>
+      <span class="source-tag">Claims Register</span>
+      <span class="source-tag">Finance Ledger</span>
+      <span class="source-tag">RI Treaties</span>
+    </div>`;
+}
+
+function updateSuggestions(text) {
+  const q = text.toLowerCase();
+  let items = [];
+  if (q.includes('motor')) {
+    items = ['Motor loss ratio trend last 6 months','Top claims by garage and city Q1 2026','Motor renewals expiring next 60 days'];
+  } else if (q.includes('health') || q.includes('ulip')) {
+    items = ['Top 10 hospitals by claim frequency 2025','ULIP vs term plan premium split 2025','Claims pending approval over 30 days'];
+  } else if (q.includes('reinsurance')) {
+    items = ['XL treaty utilisation YTD 2026','Cession ratio by LoB Q1 2026','Overdue Ri settlements 30+ days'];
+  } else {
+    items = ['Loss ratio trend Motor vs Health YTD 2026','Expiring policies next 30 days all LoB','Outstanding collections by broker Apr 2026'];
+  }
+  document.getElementById('suggestList').innerHTML = items.map(s =>
+    `<div class="suggest-item" onclick="fillAndSend('${escAttr(s)}')"><span class="suggest-arrow">↗</span>${s}</div>`
+  ).join('');
+}
+
+function loadReport(type) {
+  const map = {
+    reinsurance: 'Show reinsurance bordereaux summary for Q1 2026',
+    claims: 'Claim triangle report and IBNR analysis FY 2025',
+    premium: 'Give me premium for Motor - Toyota for March 2026',
+    ulip: 'What is claim ratio for Health - ULIP policy 2025',
+    finance: 'Finance reconciliation status and outstanding items April 2026'
+  };
+  if (map[type]) fillAndSend(map[type]);
+}
+
+/* ── UTILS ── */
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const escAttr = s => s.replace(/'/g,"\\'");
+
+/* ── STATUS TIME ── */
+setInterval(() => {
+  const el = document.getElementById('statusTime');
+  if (el) el.textContent = 'Synced ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}, 60000);
+</script>
+</body>
+</html>
